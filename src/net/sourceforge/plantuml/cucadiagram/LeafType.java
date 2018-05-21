@@ -55,7 +55,9 @@ public enum LeafType {
 
 	BLOCK, ENTITY,
 
-	STILL_UNKNOWN;
+	STILL_UNKNOWN, 
+	
+	DOMAIN, REQUIREMENT;
 
 	public static LeafType getLeafType(String type) {
 		type = StringUtils.goUpperCase(type);

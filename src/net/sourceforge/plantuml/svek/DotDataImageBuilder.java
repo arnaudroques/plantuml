@@ -99,14 +99,18 @@ import net.sourceforge.plantuml.svek.image.EntityImageCircleEnd;
 import net.sourceforge.plantuml.svek.image.EntityImageCircleStart;
 import net.sourceforge.plantuml.svek.image.EntityImageClass;
 import net.sourceforge.plantuml.svek.image.EntityImageDescription;
+import net.sourceforge.plantuml.svek.image.EntityImageDesignedDomain;
+import net.sourceforge.plantuml.svek.image.EntityImageDomain;
 import net.sourceforge.plantuml.svek.image.EntityImageEmptyPackage;
 import net.sourceforge.plantuml.svek.image.EntityImageGroup;
 import net.sourceforge.plantuml.svek.image.EntityImageLollipopInterface;
 import net.sourceforge.plantuml.svek.image.EntityImageLollipopInterfaceEye1;
 import net.sourceforge.plantuml.svek.image.EntityImageLollipopInterfaceEye2;
+import net.sourceforge.plantuml.svek.image.EntityImageMachine;
 import net.sourceforge.plantuml.svek.image.EntityImageNote;
 import net.sourceforge.plantuml.svek.image.EntityImageObject;
 import net.sourceforge.plantuml.svek.image.EntityImagePseudoState;
+import net.sourceforge.plantuml.svek.image.EntityImageRequirement;
 import net.sourceforge.plantuml.svek.image.EntityImageState;
 import net.sourceforge.plantuml.svek.image.EntityImageState2;
 import net.sourceforge.plantuml.svek.image.EntityImageStateBorder;
@@ -429,7 +433,46 @@ public final class DotDataImageBuilder {
 		if (leaf.getLeafType() == LeafType.TIPS) {
 			return new EntityImageTips(leaf, skinParam, bibliotekon);
 		}
-		throw new UnsupportedOperationException(leaf.getLeafType().toString());
+		// TODO
+		if (leaf.getLeafType() == LeafType.DOMAIN
+	&& leaf.getStereotype()!=null && (leaf.getStereotype().getLabel(false).equalsIgnoreCase("M")
+	|| leaf.getStereotype().getLabel(false).equalsIgnoreCase("<<Machine>>")
+	|| leaf.getStereotype().getLabel(false).equalsIgnoreCase("<<S>>")	
+	|| leaf.getStereotype().getLabel(false).equalsIgnoreCase("<<Spec>>")	
+	|| leaf.getStereotype().getLabel(false).equalsIgnoreCase("<<Specification>>")	
+		)) {
+			return new EntityImageMachine(leaf, skinParam);
+		} else if (leaf.getLeafType() == LeafType.DOMAIN
+		&& leaf.getStereotype()!=null && (leaf.getStereotype().getLabel(false).equalsIgnoreCase("<<D>>")
+						|| leaf.getStereotype().getLabel(false).equalsIgnoreCase("<<Designed>>")
+						|| leaf.getStereotype().getLabel(false).equalsIgnoreCase("<<Nested>>")	
+						|| leaf.getStereotype().getLabel(false).equalsIgnoreCase("<<Solved>>")	
+		)) {
+				return new EntityImageDesignedDomain(leaf, skinParam);
+		} else if (leaf.getLeafType() == LeafType.REQUIREMENT) {
+				return new EntityImageRequirement(leaf, skinParam);
+		} else if (leaf.getLeafType() == LeafType.DOMAIN
+				&& leaf.getStereotype()!=null && (leaf.getStereotype().getLabel(false).equalsIgnoreCase("<<L>>")
+						|| leaf.getStereotype().getLabel(false).equalsIgnoreCase("<<Lexical>>")
+						|| leaf.getStereotype().getLabel(false).equalsIgnoreCase("<<X>>")	
+						|| leaf.getStereotype().getLabel(false).equalsIgnoreCase("<<Given>>")	
+		)) {
+				return new EntityImageDomain(leaf, skinParam, 'X');
+		} else if (leaf.getLeafType() == LeafType.DOMAIN
+				&& leaf.getStereotype()!=null && (leaf.getStereotype().getLabel(false).equalsIgnoreCase("<<C>>")
+						|| leaf.getStereotype().getLabel(false).equalsIgnoreCase("<<Causal>>")
+		)) {
+				return new EntityImageDomain(leaf, skinParam, 'C');
+		} else if (leaf.getLeafType() == LeafType.DOMAIN 
+			&& leaf.getStereotype()!=null && (leaf.getStereotype().getLabel(false).equalsIgnoreCase("<<B>>")
+					|| leaf.getStereotype().getLabel(false).equalsIgnoreCase("<<Biddable>>")
+					|| leaf.getStereotype().getLabel(false).equalsIgnoreCase("<<Uncertain>>")
+		)) {
+			return new EntityImageDomain(leaf, skinParam, 'B');
+		} else if (leaf.getLeafType() == LeafType.DOMAIN) {
+			return new EntityImageDomain(leaf, skinParam, 'P');
+		} else
+			throw new UnsupportedOperationException(leaf.getLeafType().toString());
 	}
 
 	private Collection<ILeaf> getUnpackagedEntities() {

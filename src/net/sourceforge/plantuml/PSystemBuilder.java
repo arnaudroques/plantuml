@@ -39,6 +39,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.plantuml.abstractbehaviour.AbstractBehaviourDiagramFactory;
+import net.sourceforge.plantuml.abstractbehaviour2.AbstractBehaviour2DiagramFactory;
 import net.sourceforge.plantuml.acearth.PSystemXearthFactory;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagramFactory;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagramFactory3;
@@ -78,6 +80,7 @@ import net.sourceforge.plantuml.openiconic.PSystemOpenIconicFactory;
 import net.sourceforge.plantuml.oregon.PSystemOregonFactory;
 import net.sourceforge.plantuml.postit.PostIdDiagramFactory;
 import net.sourceforge.plantuml.printskin.PrintSkinFactory;
+import net.sourceforge.plantuml.problemdiagram.ProblemDiagramFactory;
 import net.sourceforge.plantuml.project3.GanttDiagramFactory;
 import net.sourceforge.plantuml.salt.PSystemSaltFactory;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
@@ -152,6 +155,9 @@ public class PSystemBuilder {
 		factories.add(new ActivityDiagramFactory3());
 		factories.add(new CompositeDiagramFactory());
 		// factories.add(new ObjectDiagramFactory());
+		factories.add(new AbstractBehaviourDiagramFactory());
+		factories.add(new AbstractBehaviour2DiagramFactory());
+		factories.add(new ProblemDiagramFactory());
 		factories.add(new BpmDiagramFactory(DiagramType.BPM));
 		factories.add(new PostIdDiagramFactory());
 		factories.add(new PrintSkinFactory());
